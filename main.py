@@ -1,6 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from POM.TikTokHashtagPage import TikTokHashtagPage
+from POM.tiktok_hashtag_page import TikTokHashtagPage
 import time
 
 driver_path="/Users/hiephuynh/Documents/apps/TikTokScraper/driver/chromedriver"
@@ -9,7 +9,7 @@ driver.implicitly_wait(1)
 
 def driver_function():
     try:
-        hash_tag_page=TikTokHashtagPage(driver,"funny")
+        hash_tag_page=TikTokHashtagPage(driver,"viral")
         hash_tag_page.go_to_hastag_page()
 
         link_Elements=hash_tag_page.get_video_links()
@@ -22,13 +22,13 @@ def driver_function():
         # link_Elements=set(link_Elements)
         
         # print(link_Elements[len(link_Elements)-1].find_element(By.TAG_NAME,"a").get_attribute('href'))
-        # write_to_file(link_Elements)
+        write_to_file(link_Elements)
     except (Exception) as e:
         print(e)
     finally:
         driver.quit()
 
-
+# should persist link to database here 
 def write_to_file(link_Elements):
     link_Elements=set(link_Elements)
     f=open("tiktok.txt","a")

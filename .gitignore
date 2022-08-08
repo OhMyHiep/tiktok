@@ -164,3 +164,4 @@ chromedriver
 *.DS_Store
 tiktok.txt
 *.mp4
+*.ini

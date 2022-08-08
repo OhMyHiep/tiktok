@@ -1,9 +1,11 @@
-from tkinter import Button
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
 import time
+
+
 class SnapTikPage():
 
     def __init__(self,driver:WebDriver):
@@ -26,22 +28,18 @@ class SnapTikPage():
         buttons=self.driver.find_element(By.CLASS_NAME,"abuttons").find_elements(By.TAG_NAME,"a")
         # print(buttons[1].tag_name,buttons[1].get_attribute("class"))
         buttons[1].click()
-        # time.sleep(10)
-
-    #add function to close ads
 
     def close_ads(self):
         try:
             WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.ID,"ad-modal")))
-            close_buttons=self.driver.find_element(By.XPATH,'//*[@id="dismiss-button"]')
-            # self.driver.execute_script("document.getElementById('dismiss-button').click();")
-            # alert = self.driver.switch_to_alert()
-            # alert.dismiss
+            close_buttons=self.driver.find_elements(By.XPATH,'//*[@id="dismiss-button"]')
+            # self.driver.execute_script("document.getRootNode().click();")
             for handle in close_buttons:
                 handle.click()
-        
-        except (Exception) as e:
-            print("did not find first layer ad")
-            print(e)
-            
 
+        except (Exception) as e:
+            print("did not find by id manually clicking\n")
+            actions = ActionChains(self.driver)
+            actions.move_to_element_with_offset(self.driver.find_element(By.TAG_NAME,'body'), 0,0)
+            actions.move_by_offset(50,10).click().perform()
+            

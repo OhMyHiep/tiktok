@@ -1,7 +1,6 @@
-from lib2to3.pgen2 import driver
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.select import Select
+
 
 
 class TikTokHashtagPage():
