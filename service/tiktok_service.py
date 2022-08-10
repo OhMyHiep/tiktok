@@ -22,3 +22,9 @@ class TiktokService():
             return self.tiktok_dao.update(queried_tiktok)
         return None
 
+    def get_tiktok_by_title(self,tk:TikTok):
+        if tk.downloaded_title:
+            return self.tiktok_dao.get_tiktok_by_title(tk)
+        
+    def get_tiktoks_by_null_title(self):
+        return self.tiktok_dao.get_tiktok_by_null_title()

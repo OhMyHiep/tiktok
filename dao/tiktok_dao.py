@@ -1,6 +1,3 @@
-from tkinter.messagebox import NO
-
-from pip import List
 from models.tiktok import TikTok
 from util import db_util
 from datetime import datetime
@@ -26,18 +23,21 @@ class TikTokDao():
     def get_all(self)->list:
         sql="""SELECT * From Tiktok"""
         result=db_util.executeSimpleQuery(sql)
+        return self.get_tiktok_list(result)
+
+    def get_tiktok_list(self,result):
         tiktok_list:list=[]
         for tuple in result:
             a=self.tiktok_mapper(tuple)
             tiktok_list.append(a)
         return tiktok_list
-
+  
   
     def update(self,tk:TikTok)->TikTok:
         sql="""UPDATE Tiktok
-                SET downloaded_title=%s
+                SET date_added=%s,downloaded_title=%s
                 WHERE tk_link=%s RETURNING *;"""
-        result=db_util.executeSimpleQuery(sql,tk.downloaded_title,tk.tk_link)
+        result=db_util.executeSimpleQuery(sql,tk.date_added,tk.downloaded_title,tk.tk_link)
         if result is not None:
             return self.tiktok_mapper(result[0])
         return None
@@ -51,3 +51,19 @@ class TikTokDao():
         if result is not None:
             return self.tiktok_mapper(result[0])
         return None
+
+
+    def get_tiktok_by_title(self,tk:TikTok):
+        sql="""SELECT * 
+                FROM Tiktok 
+                WHERE downloaded_title=%s;"""
+        result=db_util.executeSimpleQuery(sql,tk.downloaded_title)
+        return self.get_tiktok_list(result)
+
+
+    def get_tiktok_by_null_title(self):
+        sql="""SELECT * 
+                FROM Tiktok 
+                WHERE downloaded_title is null;"""
+        result=db_util.executeSimpleQuery(sql)
+        return self.get_tiktok_list(result)

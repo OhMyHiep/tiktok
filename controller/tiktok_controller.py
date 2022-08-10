@@ -11,7 +11,13 @@ class TikTokController():
         return self.tiktok_service.add_tiktok(tiktok)
 
     def get_all(self):
-        return self.tiktok_service.get_all(())
+        return self.tiktok_service.get_all()
 
     def update(self,tk:TikTok):
         return self.tiktok_service.update(tk)
+
+    def get_tiktok_by_title(self,tk:TikTok):
+        return self.tiktok_service.get_tiktok_by_title(tk)
+
+    def get_tiktoks_by_null_title(self):
+        return self.tiktok_service.get_tiktoks_by_null_title()

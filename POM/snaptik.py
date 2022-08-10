@@ -38,7 +38,7 @@ class SnapTikPage():
                 handle.click()
 
         except (Exception) as e:
-            print("did not find by id manually clicking\n")
+            print("\ndid not find by id, manually clicking\n")
             actions = ActionChains(self.driver)
             actions.move_to_element_with_offset(self.driver.find_element(By.TAG_NAME,'body'), 0,0)
             actions.move_by_offset(50,10).click().perform()
